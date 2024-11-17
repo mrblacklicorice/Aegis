@@ -8,87 +8,130 @@
     android:background="#D8BFD8"
     tools:context=".MainActivity">
 
-    <!-- Large Round Tap Button -->
 
-    <!-- Red Dot on Tap Button -->
-
-    <Button
-        android:id="@+id/tapButton"
-        android:layout_width="147dp"
-        android:layout_height="148dp"
-        android:layout_marginTop="108dp"
-        android:background="@drawable/redcircle"
-        android:backgroundTint="#9370DB"
-        android:fontFamily="sans-serif-medium"
-        android:text="Tap"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp"
+    <ImageButton
+        android:id="@+id/settingsButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:backgroundTint="#00FFFFFF"
+        android:foregroundGravity="center"
+        android:src="@drawable/baseline_settings_24"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <View
-        android:id="@+id/redDot"
-        android:layout_width="16dp"
-        android:layout_height="16dp"
-        android:layout_marginStart="119dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="12dp"
-        android:background="@drawable/red_dot"
-        app:layout_constraintEnd_toEndOf="@id/tapButton"
-        app:layout_constraintStart_toStartOf="@+id/tapButton"
-        app:layout_constraintTop_toTopOf="@id/tapButton" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    <!-- Call Button with Phone Icon -->
-    <!-- Replace with call icon HOWWW -->
-<!--    android:contentDescription="Call Button"-->
-<!--    android:tint="#FFFFFF"-->
-<!--    app:layout_constraintTop_toBottomOf="@id/tapButton"-->
-<!--    app:layout_constraintStart_toStartOf="parent"-->
-<!--    android:layout_marginTop="24dp"-->
-<!--    android:layout_marginEnd="8dp"/>-->
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="50dp" />
 
-    <!-- Location Button with Location Icon -->
-    <!-- Replace with location icon HOWWW -->
-<!--    android:contentDescription="Location Button"-->
-<!--    android:tint="#FFFFFF"-->
-<!--    app:layout_constraintTop_toBottomOf="@id/tapButton"-->
-<!--    app:layout_constraintStart_toEndOf="@id/callButton"-->
-<!--    app:layout_constraintEnd_toStartOf="@id/messageButton"-->
-<!--    android:layout_marginTop="24dp"/>-->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="223dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
 
-    <!-- Message Button with Message Icon -->
+                <ProgressBar
+                    android:id="@+id/circularProgressBar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="223dp"
+                    android:layout_height="213dp"
+                    android:background="@drawable/circular_background"
+                    android:elevation="1dp"
+                    android:indeterminate="false"
+                    android:max="100"
+                    android:progress="60"
+                    android:progressDrawable="@drawable/circular_progress_bar"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="1.0" />
 
-    <ImageButton
-        android:id="@+id/callButton"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:background="@drawable/round_button"
-        android:src="@drawable/call_icon"
-        tools:layout_editor_absoluteX="51dp"
-        tools:layout_editor_absoluteY="502dp" />
+                <ImageButton
+                    android:id="@+id/tapButton"
+                    android:layout_width="148dp"
+                    android:layout_height="148dp"
+                    android:background="@drawable/red_circle"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="Tap To Alert"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageButton
-        android:id="@+id/locationButton"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:background="#"
-        android:src="@drawable/location_icon"
-        tools:layout_editor_absoluteX="173dp"
-        tools:layout_editor_absoluteY="502dp" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <ImageButton
-        android:id="@+id/messageButton"
-        android:layout_width="88dp"
-        android:layout_height="93dp"
-        android:layout_marginTop="220dp"
-        android:layout_marginEnd="48dp"
-        android:background="@drawable/texticon"
-        android:contentDescription="Message Button"
-        android:src="@drawable/texticon"
-        android:tint="#"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tapButton" />
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="341dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <ImageButton
+                    android:id="@+id/callButton"
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/circle_button"
+                    android:scaleType="center"
+                    android:src="@drawable/baseline_call_24" />
+
+                <!-- Uncomment if needed -->
+                <!-- <ImageButton
+                    android:id="@+id/callEndButton"
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/circle_button"
+                    android:src="@drawable/baseline_call_end_24"
+                    android:scaleType="centerInside" /> -->
+
+                <ImageButton
+                    android:id="@+id/locationOffButton"
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/circle_button"
+                    android:scaleType="center"
+                    android:src="@drawable/baseline_location_off_24" />
+
+                <!-- Uncomment if needed -->
+                <!-- <ImageButton
+                    android:id="@+id/locationOnButton"
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/circle_button"
+                    android:src="@drawable/baseline_location_on_24"
+                    android:scaleType="centerInside" /> -->
+
+                <ImageButton
+                    android:id="@+id/messageButton"
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/circle_button"
+                    android:scaleType="center"
+                    android:src="@drawable/baseline_message_24" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
