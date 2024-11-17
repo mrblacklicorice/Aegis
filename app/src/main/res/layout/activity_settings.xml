@@ -1,180 +1,208 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
-    android:background="#D8BFD8">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <!-- General Section -->
     <TextView
-        android:id="@+id/generalSectionLabel"
+        android:id="@+id/general_section"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="General"
-        android:textSize="20sp"
-        android:textColor="#4B0082"
+        android:textSize="18sp"
         android:textStyle="bold"
-        android:fontFamily="sans-serif-medium"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="8dp"
+        android:textColor="#8A2BE2"
     app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintStart_toStartOf="parent"/>
+    app:layout_constraintStart_toStartOf="parent"
+    android:paddingTop="16dp"/>
 
     <EditText
-        android:id="@+id/companionName"
+        android:id="@+id/companion_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Enter Companion Name"
-        android:hintTextColor="#A9A9A9"
-        android:backgroundTint="#4B0082"
-        android:layout_marginTop="16dp"
-    app:layout_constraintTop_toBottomOf="@id/generalSectionLabel"
+        android:hint="Companion Name"
+        android:textColorHint="#8A2BE2"
+    app:layout_constraintTop_toBottomOf="@+id/general_section"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    android:padding="12dp"/>
+
+    <TextView
+        android:id="@+id/high_risk_area_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="High Risk Area Alert"
+        android:textSize="16sp"
+        android:textColor="#8A2BE2"
+    app:layout_constraintTop_toBottomOf="@+id/companion_name"
+    app:layout_constraintStart_toStartOf="parent"
+    android:paddingTop="8dp"/>
+
+    <Switch
+        android:id="@+id/high_risk_area_toggle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="196dp"
+        android:paddingEnd="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/high_risk_area_label" />
+
+    <TextView
+        android:id="@+id/high_risk_area_times"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:textColor="#8A2BE2"
+    app:layout_constraintTop_toBottomOf="@+id/high_risk_area_toggle"
+    app:layout_constraintStart_toStartOf="parent"
+    android:paddingTop="8dp"/>
+
+    <TextView
+        android:id="@+id/start_time_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="Start Time"
+        android:textColor="#8A2BE2"
+        android:textStyle="italic"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/high_risk_area_times" />
+
+    <TimePicker
+        android:id="@+id/start_time_picker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/start_time_label"
+        app:layout_constraintStart_toStartOf="parent"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/end_time_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="8dp"
+        android:text="End Time"
+        android:textColor="#8A2BE2"
+        android:textStyle="italic"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/start_time_picker" />
+
+    <TimePicker
+        android:id="@+id/end_time_picker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/end_time_label"
+        app:layout_constraintStart_toStartOf="parent"
+        android:visibility="gone"/>
+
+    <!-- Companion Call Section -->
+    <TextView
+        android:id="@+id/companion_call_section"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Companion Call"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="#8A2BE2"
+    app:layout_constraintTop_toBottomOf="@+id/end_time_picker"
+    app:layout_constraintStart_toStartOf="parent"
+    android:paddingTop="16dp"/>
+
+    <Switch
+        android:id="@+id/contact_911_toggle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Contact 911"
+        android:textColor="#8A2BE2"
+    app:layout_constraintTop_toBottomOf="@+id/companion_call_section"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintEnd_toEndOf="parent"/>
 
     <Switch
-        android:id="@+id/highRiskAreaAlertToggle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="High Risk Area Alert"
-        android:textColor="#4B0082"
-        android:fontFamily="sans-serif-medium"
-        app:layout_constraintTop_toBottomOf="@id/companionName"
-        app:layout_constraintStart_toStartOf="parent"/>
-
-    <EditText
-        android:id="@+id/highRiskAreaStartTime"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="Start Time"
-        android:hintTextColor="#A9A9A9"
-        android:backgroundTint="#4B0082"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@id/highRiskAreaAlertToggle"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
-    <EditText
-        android:id="@+id/highRiskAreaEndTime"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="End Time"
-        android:hintTextColor="#A9A9A9"
-        android:backgroundTint="#4B0082"
-        app:layout_constraintTop_toBottomOf="@id/highRiskAreaStartTime"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
-    <!-- Companion Call Section -->
-    <TextView
-        android:id="@+id/companionCallSectionLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Companion Call"
-        android:textSize="20sp"
-        android:textColor="#4B0082"
-        android:textStyle="bold"
-        android:fontFamily="sans-serif-medium"
-        android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@id/highRiskAreaEndTime"
-        app:layout_constraintStart_toStartOf="parent"/>
-
-    <Switch
-        android:id="@+id/contact911Toggle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Contact 911"
-        android:textColor="#4B0082"
-        android:fontFamily="sans-serif-medium"
-        app:layout_constraintTop_toBottomOf="@id/companionCallSectionLabel"
-        app:layout_constraintStart_toStartOf="parent"/>
-
-    <Switch
-        android:id="@+id/contactEmergencyToggle"
+        android:id="@+id/contact_emergency_toggle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Contact Emergency Contacts"
-        android:textColor="#4B0082"
-        android:fontFamily="sans-serif-medium"
-        app:layout_constraintTop_toBottomOf="@id/contact911Toggle"
-        app:layout_constraintStart_toStartOf="parent"/>
+        android:textColor="#8A2BE2"
+    app:layout_constraintTop_toBottomOf="@+id/contact_911_toggle"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"/>
 
     <EditText
-        android:id="@+id/customMessageCompanionCall"
+        android:id="@+id/custom_message"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Enter custom message"
-        android:hintTextColor="#A9A9A9"
-        android:backgroundTint="#4B0082"
-        app:layout_constraintTop_toBottomOf="@id/contactEmergencyToggle"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        android:hint="Enter Custom Message"
+        android:textColorHint="#8A2BE2"
+    app:layout_constraintTop_toBottomOf="@+id/contact_emergency_toggle"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    android:padding="12dp"/>
 
     <Switch
-        android:id="@+id/audioDetectionToggleCompanionCall"
+        android:id="@+id/audio_detection_toggle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Audio Detection"
-        android:textColor="#4B0082"
-        android:fontFamily="sans-serif-medium"
-        app:layout_constraintTop_toBottomOf="@id/customMessageCompanionCall"
-        app:layout_constraintStart_toStartOf="parent"/>
+        android:textColor="#8A2BE2"
+    app:layout_constraintTop_toBottomOf="@+id/custom_message"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"/>
 
     <!-- Tap Button Section -->
     <TextView
-        android:id="@+id/tapButtonSectionLabel"
+        android:id="@+id/tap_button_section"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Tap Button"
-        android:textSize="20sp"
-        android:textColor="#4B0082"
+        android:textSize="18sp"
         android:textStyle="bold"
-        android:fontFamily="sans-serif-medium"
-        android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@id/audioDetectionToggleCompanionCall"
-        app:layout_constraintStart_toStartOf="parent"/>
+        android:textColor="#8A2BE2"
+    app:layout_constraintTop_toBottomOf="@+id/audio_detection_toggle"
+    app:layout_constraintStart_toStartOf="parent"
+    android:paddingTop="16dp"/>
 
     <Switch
-        android:id="@+id/contactAllToggle"
+        android:id="@+id/contact_all_toggle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Contact All"
-        android:textColor="#4B0082"
-        android:fontFamily="sans-serif-medium"
-        app:layout_constraintTop_toBottomOf="@id/tapButtonSectionLabel"
-        app:layout_constraintStart_toStartOf="parent"/>
+        android:text="Contact 911"
+        android:textColor="#8A2BE2"
+    app:layout_constraintTop_toBottomOf="@+id/tap_button_section"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"/>
 
     <Switch
-        android:id="@+id/contactEmergencyTapButtonToggle"
+        android:id="@+id/contact_emergency_contacts_toggle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Contact Emergency Contacts"
-        android:textColor="#4B0082"
-        android:fontFamily="sans-serif-medium"
-        app:layout_constraintTop_toBottomOf="@id/contactAllToggle"
-        app:layout_constraintStart_toStartOf="parent"/>
+        android:textColor="#8A2BE2"
+    app:layout_constraintTop_toBottomOf="@+id/contact_all_toggle"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"/>
 
     <EditText
-        android:id="@+id/customMessageTapButton"
+        android:id="@+id/tap_custom_message"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Enter custom message"
-        android:hintTextColor="#A9A9A9"
-        android:backgroundTint="#4B0082"
-        app:layout_constraintTop_toBottomOf="@id/contactEmergencyTapButtonToggle"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        android:hint="Enter Custom Message"
+        android:textColorHint="#8A2BE2"
+    app:layout_constraintTop_toBottomOf="@+id/contact_emergency_contacts_toggle"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    android:padding="12dp"/>
 
     <Switch
-        android:id="@+id/audioDetectionToggleTapButton"
+        android:id="@+id/tap_audio_detection_toggle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Audio Detection"
-        android:textColor="#4B0082"
-        android:fontFamily="sans-serif-medium"
-        app:layout_constraintTop_toBottomOf="@id/customMessageTapButton"
-        app:layout_constraintStart_toStartOf="parent"/>
+        android:textColor="#8A2BE2"
+    app:layout_constraintTop_toBottomOf="@+id/tap_custom_message"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
