@@ -13,12 +13,11 @@ class SettingsActivity : AppCompatActivity() {
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = "Settings"
 
-        // Handle back navigation using OnBackPressedDispatcher
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                // Handle what to do on back pressed
-                finish()  // Or any other custom logic
+                finish()
             }
         }
         onBackPressedDispatcher.addCallback(this, callback)

@@ -90,6 +90,7 @@ class CompanionCallActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         startTimer()
 
         initSpeechRecognizer()
+        initChatGpt()
     }
 
     override fun onResume() {
@@ -107,6 +108,14 @@ class CompanionCallActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             }
         }
     }
+
+    private fun initChatGpt() {
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET) != PackageManager.PERMISSION_GRANTED){
+            requestInternetPermission()
+        }
+    }
+
+
 
     private fun checkPermission(): Boolean {
         return ContextCompat.checkSelfPermission(
@@ -136,6 +145,30 @@ class CompanionCallActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                 .show()
         } else {
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.RECORD_AUDIO), 100)
+        }
+    }
+
+    private fun requestInternetPermission() {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(
+                this,
+                Manifest.permission.INTERNET
+            )
+        ) {
+            AlertDialog.Builder(this)
+                .setTitle("Permission Required")
+                .setMessage("This app needs the internet permission to access the internet.")
+                .setPositiveButton("OK") { _, _ ->
+                    ActivityCompat.requestPermissions(
+                        this,
+                        arrayOf(Manifest.permission.INTERNET),
+                        101
+                    )
+                }
+                .setNegativeButton("Cancel", null)
+                .create()
+                .show()
+        } else {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.INTERNET), 101)
         }
     }
 

@@ -7,13 +7,15 @@ android {
     namespace = "com.cs407.aegis"
     compileSdk = 35
 
+
     defaultConfig {
         applicationId = "com.cs407.aegis"
         minSdk = 24
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
-        buildConfigField("String", "API_KEY", "\"${System.getenv("api.key")}\"")
+        buildConfigField("String", "API_KEY", "\"${project.findProperty("api.key")}\"")
+        buildConfigField("String", "BASE_URL", "\"https://api.openai.com/\"")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
