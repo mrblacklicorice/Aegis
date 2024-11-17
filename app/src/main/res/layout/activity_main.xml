@@ -99,7 +99,7 @@
                     android:scaleType="centerInside" /> -->
 
                 <ImageButton
-                    android:id="@+id/locationOffButton"
+                    android:id="@+id/locationToggle"
                     android:layout_width="110dp"
                     android:layout_height="110dp"
                     android:layout_marginStart="8dp"

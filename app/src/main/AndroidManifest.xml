@@ -27,6 +27,12 @@
         <activity android:name=".SettingsActivity"
             android:exported="true"/>
 
+        <activity android:name=".CompanionCallActivity"
+            android:exported="true"/>
+
+        <activity android:name=".MessageActivity"
+            android:exported="true"/>
+
 
 
 <!--        <activity-->

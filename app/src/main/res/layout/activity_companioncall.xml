@@ -4,17 +4,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#D3D3D3">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="#D3D3D3"
+    tools:context=".CompanionCallActivity">
 
 
-    <EditText
+    <TextView
         android:id="@+id/companion_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="52dp"
         android:background="@drawable/edit_text_background"
         android:gravity="center"
-        android:hint="Alka"
+        android:text="Alka"
         android:padding="12dp"
         android:textColor="#0C0C0D"
         android:textSize="30sp"

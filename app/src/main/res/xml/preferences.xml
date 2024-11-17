@@ -6,7 +6,9 @@
             android:title="Companion Name"
             android:dialogTitle="Enter your companion's name"
             android:singleLine="true"
-            android:inputType="text" />
+            android:inputType="text"
+             android:defaultValue="Compainion"
+            />
         <SwitchPreferenceCompat
             android:key="high_risk_area_toggle"
             android:title="High Risk Area Alert" />
