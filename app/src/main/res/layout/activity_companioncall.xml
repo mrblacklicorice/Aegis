@@ -15,7 +15,6 @@
         android:background="@drawable/edit_text_background"
         android:gravity="center"
         android:hint="Alka"
-        android:hintTextColor="#B0B0B0"
         android:padding="12dp"
         android:textColor="#0C0C0D"
         android:textSize="30sp"

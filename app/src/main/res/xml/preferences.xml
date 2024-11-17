@@ -1,0 +1,52 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="General">
+        <EditTextPreference
+            android:key="companion_name"
+            android:title="Companion Name"
+            android:dialogTitle="Enter your companion's name"
+            android:singleLine="true"
+            android:inputType="text" />
+        <SwitchPreferenceCompat
+            android:key="high_risk_area_toggle"
+            android:title="High Risk Area Alert" />
+        <Preference
+            android:key="high_risk_area_times"
+            android:title="High Risk Area Times"
+            android:summary="Configure the times" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Companion Call">
+        <SwitchPreferenceCompat
+            android:key="contact_911_toggle"
+            android:title="Contact 911" />
+        <SwitchPreferenceCompat
+            android:key="contact_emergency_toggle"
+            android:title="Contact Emergency Contacts" />
+        <EditTextPreference
+            android:key="custom_message"
+            android:title="Custom Message"
+            android:dialogTitle="Enter Custom Message"
+            android:inputType="text" />
+        <SwitchPreferenceCompat
+            android:key="audio_detection_toggle"
+            android:title="Audio Detection" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Tap Button">
+        <SwitchPreferenceCompat
+            android:key="contact_all_toggle"
+            android:title="Contact All" />
+        <SwitchPreferenceCompat
+            android:key="contact_emergency_contacts_toggle"
+            android:title="Contact Emergency Contacts" />
+        <EditTextPreference
+            android:key="tap_custom_message"
+            android:title="Custom Message for Tap"
+            android:dialogTitle="Enter Custom Message for Tap"
+            android:inputType="text" />
+        <SwitchPreferenceCompat
+            android:key="tap_audio_detection_toggle"
+            android:title="Audio Detection for Tap" />
+    </PreferenceCategory>
+</PreferenceScreen>
