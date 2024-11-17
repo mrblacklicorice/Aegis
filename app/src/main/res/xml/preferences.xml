@@ -26,6 +26,11 @@
             android:key="contact_emergency_toggle"
             android:title="Contact Emergency Contacts" />
         <EditTextPreference
+            android:key="emergency_contact_1"
+            android:title="Emergency Contact 1"
+            android:dialogTitle="Enter Emergency Contact 1"
+            android:inputType="phone" />
+        <EditTextPreference
             android:key="custom_message"
             android:title="Custom Message"
             android:dialogTitle="Enter Custom Message"
