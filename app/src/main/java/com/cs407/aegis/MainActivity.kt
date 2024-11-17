@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
     private val drainRunnable = object : Runnable {
         override fun run() {
             if (incrementValue > 0) {
-                incrementValue--
+                incrementValue -= 2
 
 //                update the UI with the new value
                 circularProgressBar.progress = incrementValue
@@ -74,7 +74,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
                     handler.removeCallbacks(incrementRunnable)
-                    handler.postDelayed(drainRunnable, 10)
+                    handler.postDelayed(drainRunnable, 5)
 
                     true
                 }

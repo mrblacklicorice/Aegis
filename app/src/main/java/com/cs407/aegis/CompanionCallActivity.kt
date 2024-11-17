@@ -1,6 +1,7 @@
 package com.cs407.aegis
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -8,24 +9,31 @@ import android.speech.RecognitionListener
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
 import android.speech.tts.TextToSpeech
-import android.util.Log
-import android.widget.Button
-import android.widget.EditText
+import android.speech.tts.UtteranceProgressListener
+import android.widget.ImageButton
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.preference.PreferenceManager
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.Locale
 
 class CompanionCallActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     private lateinit var tts: TextToSpeech
     private lateinit var call_timer: TextView
+    private lateinit var endcall_button: ImageButton
     private var speechRecognizer: SpeechRecognizer? = null
     private var input: String = ""
+    private var job: Job? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,21 +47,57 @@ class CompanionCallActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         val companionName = findViewById<TextView>(R.id.companion_name)
         companionName.text = companionNameStored
 
-        tts = TextToSpeech(this, this)
         call_timer = findViewById(R.id.call_timer)
+        endcall_button = findViewById(R.id.callEndButton)
+
+        endcall_button.setOnClickListener {
+            finish()
+        }
+
+        tts = TextToSpeech(this, this)
         speechRecognizer = SpeechRecognizer.createSpeechRecognizer(this)
+    }
+
+    private fun startTimer() {
+        job = CoroutineScope(Dispatchers.Default).launch {
+            var seconds = 0
+            while (isActive) {
+                withContext(Dispatchers.Main) {
+                    call_timer.text = formatSeconds(seconds)
+                }
+
+                delay(1000)
+                seconds++
+            }
+        }
+    }
+
+    @SuppressLint("DefaultLocale")
+    private fun formatSeconds(seconds: Int): String {
+        val hours = seconds / 3600
+        val minutes = (seconds % 3600) / 60
+        val secs = seconds % 60
+        return String.format("%02d:%02d:%02d", hours, minutes, secs)
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        startTimer()
 
         initSpeechRecognizer()
-        listen()
+    }
 
-//        speakOut("Hi! How is it going?")
+    override fun onResume() {
+        super.onResume()
+
+        listen()
     }
 
     private fun listen() {
         if (SpeechRecognizer.isRecognitionAvailable(this)) {
             if (checkPermission()) {
                 startListening()
-//                speakOut("Thanks for the response!")
             } else {
                 requestPermission()
             }
@@ -61,16 +105,27 @@ class CompanionCallActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     }
 
     private fun checkPermission(): Boolean {
-        return ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED
+        return ContextCompat.checkSelfPermission(
+            this,
+            Manifest.permission.RECORD_AUDIO
+        ) == PackageManager.PERMISSION_GRANTED
     }
 
     private fun requestPermission() {
-        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.RECORD_AUDIO)) {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(
+                this,
+                Manifest.permission.RECORD_AUDIO
+            )
+        ) {
             AlertDialog.Builder(this)
                 .setTitle("Permission Required")
                 .setMessage("This app needs the microphone permission to record audio.")
                 .setPositiveButton("OK") { _, _ ->
-                    ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.RECORD_AUDIO), 100)
+                    ActivityCompat.requestPermissions(
+                        this,
+                        arrayOf(Manifest.permission.RECORD_AUDIO),
+                        100
+                    )
                 }
                 .setNegativeButton("Cancel", null)
                 .create()
@@ -80,7 +135,11 @@ class CompanionCallActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         }
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == 100 && grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             startListening()
@@ -97,14 +156,24 @@ class CompanionCallActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             override fun onBufferReceived(buffer: ByteArray?) {}
             override fun onEndOfSpeech() {}
             override fun onError(error: Int) {
-                call_timer.text = "Call Failed"
+                val errorDescription = getErrorText(error)
+
+                if(error == SpeechRecognizer.ERROR_NO_MATCH) {
+                    listen()
+                    return
+                }
+
+                call_timer.text = errorDescription
             }
+
             override fun onResults(results: Bundle?) {
                 val data = results?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
                 input = data?.get(0) ?: ""
 
-                Toast.makeText(this@CompanionCallActivity, input, Toast.LENGTH_SHORT).show()
+//                Toast.makeText(this@CompanionCallActivity, input, Toast.LENGTH_SHORT).show()
+                speakOut("Thanks for the response!")
             }
+
             override fun onPartialResults(partialResults: Bundle?) {}
             override fun onEvent(eventType: Int, params: Bundle?) {}
         })
@@ -112,7 +181,10 @@ class CompanionCallActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
     private fun startListening() {
         val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+        intent.putExtra(
+            RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+            RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
+        )
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
         speechRecognizer?.startListening(intent)
     }
@@ -120,12 +192,27 @@ class CompanionCallActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     override fun onInit(status: Int) {
         if (status == TextToSpeech.SUCCESS) {
             tts.setLanguage(Locale.US)
+
+            tts.setOnUtteranceProgressListener(object : UtteranceProgressListener() {
+                override fun onDone(utteranceId: String?) {
+                    runOnUiThread {
+                        listen()
+                    }
+                }
+
+                override fun onStart(utteranceId: String?) {
+
+                }
+
+                override fun onError(utteranceId: String?) {
+                    call_timer.text = utteranceId
+                }
+            })
         }
     }
 
     private fun speakOut(text: String) {
         tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, "")
-        listen()
     }
 
     private fun getErrorText(errorCode: Int): String {
@@ -144,11 +231,13 @@ class CompanionCallActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     }
 
     override fun onDestroy() {
+        super.onDestroy()
+
         speechRecognizer?.destroy()
         if (::tts.isInitialized) {
             tts.stop()
             tts.shutdown()
         }
-        super.onDestroy()
+        job?.cancel()
     }
 }

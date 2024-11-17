@@ -3,7 +3,7 @@
     <item android:id="@android:id/background">
         <shape
             android:shape="ring"
-            android:thickness="10dp"
+            android:thickness="40dp"
             android:useLevel="false">
             <solid android:color="#E0E0E0"/> <!-- Background color -->
         </shape>
@@ -14,9 +14,9 @@
             android:toDegrees="270">
             <shape
                 android:shape="ring"
-                android:thickness="10dp"
+                android:thickness="40dp"
                 android:useLevel="true"> <!-- Use level to show progress -->
-                <solid android:color="#FF6200EE"/> <!-- Progress color -->
+                <solid android:color="#8558B1"/> <!-- Progress color -->
             </shape>
         </rotate>
     </item>
