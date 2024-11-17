@@ -1,10 +1,15 @@
 package com.cs407.aegis
 
+import android.os.Bundle
+import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.os.Bundle
 import android.speech.RecognitionListener
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
@@ -14,7 +19,6 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.preference.PreferenceManager
@@ -170,8 +174,31 @@ class CompanionCallActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                 val data = results?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
                 input = data?.get(0) ?: ""
 
-//                Toast.makeText(this@CompanionCallActivity, input, Toast.LENGTH_SHORT).show()
-                speakOut("Thanks for the response!")
+                val messages = listOf(
+                    Message(role = "user", content = input)
+                )
+
+                val request = ChatRequest(
+                    model = "gpt-3.5-turbo",  // Use your model here
+                    messages = messages
+                )
+
+                RetrofitInstance.api.getChatResponse(request).enqueue(object : Callback<ChatResponse> {
+                    override fun onResponse(call: Call<ChatResponse>, response: Response<ChatResponse>) {
+                        if (response.isSuccessful) {
+                            val chatResponse = response.body()
+                            // Handle the response
+                            chatResponse?.choices?.get(0)?.message?.content?.let { speakOut(it) }
+                            Log.d("ChatGPT", "Response: ${chatResponse?.choices?.get(0)?.message?.content}")
+                        } else {
+                            Log.e("ChatGPT", "Error: ${response.code()}")
+                        }
+                    }
+
+                    override fun onFailure(call: Call<ChatResponse>, t: Throwable) {
+                        Log.e("ChatGPT", "Request failed: ${t.message}")
+                    }
+                })
             }
 
             override fun onPartialResults(partialResults: Bundle?) {}
